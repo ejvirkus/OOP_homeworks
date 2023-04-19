@@ -28,13 +28,14 @@ class Gym:
     def __init__(self, name:str, max_members_number:int):
         self.name = name
         self.max_members_number = max_members_number
-        self.member_list = []
-        self.stamina_list = []
-        self.age_list = []
+        self.member_list = [[],[],[]]
     
     def add_member(self, member: Member) -> Member:
         if self.max_members_number < len(self.member_list):
-            self.member_list.append(member)
+            self.member_list[0].append(member.name)
+            self.member_list[1].append(member.trainers)
+            self.member_list[2].append(member.age)
+            print(member, " added!")
             return f'{member}'
         else:
             return f'Gym full'
@@ -107,3 +108,10 @@ class City:
 
     def get_all_gyms(self) -> list:
         return self.gym_list
+
+if __name__ == '__main__':
+    trainers1 = Trainers(67, "Blue")
+    member1 = Member("Jaanus", 25, trainers1)
+    gym1 = Gym("Golds", 55)
+    gym1.can_add_member()
+    gym1.add_member(member1)
