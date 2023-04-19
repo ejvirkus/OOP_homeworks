@@ -12,9 +12,10 @@ class Member:
         self.name = name
         self.age = age
         self.trainers = trainers
+        self.__gym_list = []
 
     def get_all_gyms(self):
-        pass
+        return self.__gym_list
 
     def get_gyms(self):
         pass
@@ -31,14 +32,22 @@ class Gym:
         self.stamina_list = []
         self.age_list = []
     
-    def add_member(self):
-        pass
+    def add_member(self, member: Member) -> Member:
+        if self.max_members_number < len(self.member_list):
+            self.member_list.append(member)
+            return f'{member}'
+        else:
+            return f'Gym full'
     
     def can_add_member(self):
-        pass
+        if len(self.member_list) < self.max_members_number:
+            return f'A new member can be added'
+        else:
+            return f'Gym full'
 
-    def remove_member(self):
-        pass
+    def remove_member(self, member:Member):
+        if member in self.member_list:
+            self.member_list.remove(member)
 
     def get_total_stamina(self):
         return sum(self.stamina_list)
@@ -58,16 +67,25 @@ class Gym:
 class City:
     def __init__(self, max_gym_number:int):
         self.max_gym_number = max_gym_number
-        gym_list = []
+        self.gym_list = []
+        self.gym_members_number_list = []
 
-    def build_gym(self):
-        pass
+    def build_gym(self, gym: Gym) -> Gym:
+        if len(self.gym_list) < self.max_gym_number:
+            self.gym_list.append(gym)
+            return f'{gym}'
+        else:
+            return f'gym limit reached'
 
     def can_build_gym(self):
-        pass
+        if len(self.gym_list) < self.max_gym_number:
+            return f'A new gym can be added'
+        else:
+            return f'Gym limit reached'
 
-    def destroy_gym(self):
-        pass
+    def destroy_gym(self, gym:Gym):
+        if gym in self.gym_list:
+            self.gym_list.remove(gym)
 
     def get_max_members_gym(self) -> list:
         pass
@@ -88,4 +106,4 @@ class City:
         pass
 
     def get_all_gyms(self) -> list:
-        pass
+        return self.gym_list
