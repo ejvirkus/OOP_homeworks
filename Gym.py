@@ -28,14 +28,31 @@ class Gym:
         self.max_members_number = max_members_number
         self.member_list = []
     
-    def can_add_member(self):
-        if len(self.member_list) < self.max_members_number:
+    def can_add_member(self, member):
+        if len(self.member_list) < self.max_members_number\
+        and isinstance(member, Member)\
+        and member.trainers != ''\
+        and member.trainers.stamina >= 0\
+        and member not in self.member_list:   
             return True
+        elif len(self.member_list) >= self.max_members_number\
+        and isinstance(member, Member)\
+        and member.trainers != ''\
+        and member.trainers.stamina >= 0\
+        and member not in self.member_list:
+            remove_list = []
+            for member in self.member_list:
+                if member.trainers.stamina == min(member.trainers.stamina for member in self.member_list):
+                    remove_list.append(member)
+            for member in remove_list:
+                self.remove_member(member)
+            return True
+
         else:
             return False
     
     def add_member(self, member: Member) -> Member:
-        if self.can_add_member() == True:
+        if self.can_add_member(member) == True:
             self.member_list.append(member)
             return f'{member}'
         else:
@@ -72,7 +89,7 @@ class City:
         self.max_gym_number = max_gym_number
         self.gym_list = []
 
-    def can_build_gym(self, gym:Gym) -> bool:
+    def can_build_gym(self, gym) -> bool:
         if len(self.gym_list) < self.max_gym_number\
         and gym not in self.gym_list :
             return True
@@ -80,7 +97,7 @@ class City:
             return False
 
     def build_gym(self, gym: Gym) -> Gym:
-        if self.can_build_gym == True:
+        if self.can_build_gym(gym) == True:
             self.gym_list.append(gym)
             return f'{gym}'
         else:
@@ -111,17 +128,17 @@ class City:
                 return gym.name
 
     def get_gyms_by_trainers_color(self, color:str) -> list:
-        Gyms_with_color = [gym.name for gym in self.gym_list for x in gym.gym_reg if x.trainers.color == color]
+        Gyms_with_color = [gym.name for gym in self.gym_list for gym.member in gym.member_list if gym.member.trainers.color == color]
         gym_name = {}
-        for name in Gyms_with_color:
-            if name in gym_name:
-                gym_name[name] += 1
+        for color in Gyms_with_color:
+            if color in gym_name:
+                gym_name[color] += 1
             else:
-                gym_name = 1
+                gym_name[color] = 1
         return sorted(set(Gyms_with_color), key=lambda x: gym_name[x], reverse=True)
 
     def get_gyms_by_name(self, name:str) -> list:
-        Gyms_with_name = [gym.name for gym in self.gym_list for x in gym.gym_reg if x.name == name]
+        Gyms_with_name = [gym.name for gym in self.gym_list if gym.name == name]
         gym_name = {}
         for name in Gyms_with_name:
             if name in gym_name:
@@ -136,30 +153,33 @@ class City:
 if __name__ == '__main__':
     trainers1 = Trainers(67, "Blue")
     trainers2 = Trainers(30, "Red")
+    trainers3 = Trainers(100, "Acqua")
 
-    member1 = Member("Jaanus", 25, trainers1)
+    member1 = Member("Andrus", 43, trainers1)
     member2 = Member("Mati", 41, trainers2)
+    member3 = Member("Annela", 23, trainers3)
 
-    gym1 = Gym("Golds", 55)
+    gym1 = Gym("Golds", 2)
     gym2 = Gym("247", 70)
 
     gym1.add_member(member1)
     gym1.add_member(member2)
-    gym2.add_member(member1)
+    print(gym1.add_member(member3))
+    #gym2.add_member(member1)
     
     #print(gym1.can_add_member())
-    #print(gym1.get_all_members())
+    print(gym1.get_all_members())
     #print(gym1.get_total_stamina())
     #print(gym1.get_members_number())
     #print(gym1.get_average_age())
 
     city1 = City(27)
-    #print(city1.build_gym(gym1))
-    #print(city1.build_gym(gym2))
+    print(city1.build_gym(gym1))
+    print(city1.build_gym(gym2))
     #print(city1.get_max_members_gym())
     #print(city1.get_max_stamina_gym())
     #print(city1.get_max_average_ages())
     #print(city1.get_min_average_ages())
-    print(city1.get_gyms_by_trainers_color("Blue"))
-    #print(city1.get_gyms_by_name())
+    #print(city1.get_gyms_by_trainers_color("Blue"))
+    #print(city1.get_gyms_by_name("Golds"))
     #print(city1.get_all_gyms())
