@@ -3,8 +3,8 @@ public class Employee {
     public String name;
     public double wage;
     public boolean wageMonthly;
-    public float taxRate;
-    public Employee(String name, double wage, boolean wageMonthly, float taxRate) {
+    public double taxRate;
+    public Employee(String name, double wage, boolean wageMonthly, double taxRate) {
         this.name = name;
         this.wage = wage;
         this.wageMonthly = wageMonthly;
@@ -39,7 +39,7 @@ public class Employee {
         return wageMonthly;
     }
 
-    public float getTaxRate() {
+    public double getTaxRate() {
         return taxRate;
     }
 }
