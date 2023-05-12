@@ -18,12 +18,11 @@ public class Halftime extends Employee{
         double pay;
         if (wageMonthly) {
             pay = this.wage * (1-this.taxRate);
-            return pay;
         }
         else {
             pay = this.wage * this.monthlyHours * (1-this.taxRate);
-            return pay;
         }
+        return pay;
     }
 
     public double getPay() {
