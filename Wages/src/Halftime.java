@@ -3,16 +3,19 @@ public class Halftime extends Employee{
     private double monthlyHours;
     public Halftime(String name, double wage, boolean wageMonthly, double taxRate, double monthlyHours){
         super(name, wage, wageMonthly, taxRate);
-        this.name = name;
-        this.wage = wage;
-        this.wageMonthly = wageMonthly;
-        this.taxRate = taxRate;
         this.monthlyHours = monthlyHours;
+    }
+
+    public void setMonthlyHours(double monthlyHours) {
+        this.monthlyHours = monthlyHours;
+    }
+
+    public double getMonthlyHours() {
+        return monthlyHours;
     }
 
     public double getNetPay() {
         double pay;
-        monthlyHours = 70;
         if (wageMonthly) {
             pay = this.wage * (1-this.taxRate);
             return pay;

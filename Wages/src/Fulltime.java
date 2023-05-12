@@ -1,13 +1,9 @@
 public class Fulltime extends Employee {
+
     private double monthlyHours;
 
-    public Fulltime(String name, double wage, boolean wageMonthly, double taxRate, double monthlyHours){
+    public Fulltime(String name, double wage, boolean wageMonthly, double taxRate){
         super(name, wage, wageMonthly, taxRate);
-        this.name = name;
-        this.wage = wage;
-        this.wageMonthly = wageMonthly;
-        this.taxRate = taxRate;
-        this.monthlyHours = monthlyHours;
     }
 
     public double getNetPay(){
