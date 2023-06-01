@@ -8,9 +8,16 @@ abstract class Book implements Discount{
         this.author = author;
         this.price = price;
     }
-    @Override
-    public double calcDiscount(){
-        return this.price;
+
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
